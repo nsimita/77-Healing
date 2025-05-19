@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BTS Festa Special</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f5e6ff;
+            margin: 0;
+            padding: 0;
+            color: #333;
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><path d="M30,50 Q50,30 70,50 T90,50" fill="none" stroke="%23d9b3ff" stroke-width="1"/><circle cx="20" cy="20" r="3" fill="%23d9b3ff"/><circle cx="80" cy="30" r="2" fill="%23d9b3ff"/><circle cx="40" cy="80" r="4" fill="%23d9b3ff"/><circle cx="70" cy="70" r="2" fill="%23d9b3ff"/><path d="M10,60 Q30,55 40,70" fill="none" stroke="%23d9b3ff" stroke-width="1"/></svg>');
+            background-size: 200px;
+            background-repeat: repeat;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: rgba(255, 255, 255, 0.9);
+            border-radius: 15px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .container::before {
+            content: "";
+            position: absolute;
+            top: -10px;
+            left: -10px;
+            right: -10px;
+            bottom: -10px;
+            border: 2px dashed #c79eff;
+            border-radius: 20px;
+            pointer-events: none;
+        }
+
+        h1 {
+            color: #8a2be2;
+            text-align: center;
+            font-size: 2.5em;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .purple-btn {
+            background-color: #9c27b0;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            font-size: 1.1em;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: block;
+            margin: 20px auto;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .purple-btn:hover {
+            background-color: #7b1fa2;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+        }
+
+        .input-number {
+            width: 100px;
+            padding: 10px;
+            font-size: 1.2em;
+            text-align: center;
+            border: 2px solid #ba68c8;
+            border-radius: 10px;
+            display: block;
+            margin: 0 auto;
+        }
+
+        .message-container {
+            background-color: #f3e5f5;
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 30px;
+            border-left: 5px solid #9c27b0;
+        }
+
+        .message-text {
+            font-size: 1.2em;
+            line-height: 1.6;
+            color: #4a148c;
+        }
+
+        .message-source {
+            font-style: italic;
+            text-align: right;
+            margin-top: 15px;
+            color: #7b1fa2;
+        }
+
+        .back-btn {
+            background-color: #ba68c8;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 1em;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: block;
+            margin: 30px auto 0;
+        }
+
+        .back-btn:hover {
+            background-color: #9c27b0;
+        }
+
+        .heart {
+            color: #e91e63;
+            font-size: 1.5em;
+            display: inline-block;
+            animation: pulse 1.5s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.3); }
+            100% { transform: scale(1); }
+        }
+
+        .page {
+            display: none;
+        }
+
+        .active {
+            display: block;
+            animation: fadeIn 0.5s;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .bts-logo {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .bts-logo span {
+            font-weight: bold;
+            color: #9c27b0;
+            font-size: 1.8em;
+            letter-spacing: 2px;
+        }
+
+        .army {
+            color: #e91e63;
+            font-weight: bold;
+        }
+
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="bts-logo">
+            <span>BTS FESTA 2024</span>
+        </div>
+
+        <!-- Page 1 -->
+        <div id="page1" class="page active">
+            <h1>Hello <span class="army">ARMY</span>! <span class="heart">💜</span></h1>
+            <p style="text-align: center; font-size: 1.2em; line-height: 1.6;">
+                This is a special Festa gift for you!<br>
+                Type any number from 1 to 77 and see what message from BTS you get.
+            </p>
+            
+            <div style="text-align: center; margin-top: 40px;">
+                <input type="number" id="messageNumber" class="input-number" min="1" max="77" placeholder="1-77">
+                <button id="showMessageBtn" class="purple-btn">Show My Message</button>
+            </div>
+        </div>
+
+        <!-- Page 2 -->
+        <div id="page2" class="page">
+            <h1>Your BTS Message <span class="heart">💜</span></h1>
+            <div class="message-container">
+                <div id="messageContent" class="message-text">
+                    <!-- Message will appear here -->
+                </div>
+                <div id="messageSource" class="message-source">
+                    <!-- Source will appear here -->
+                </div>
+            </div>
+            <button id="backBtn" class="back-btn">Choose Another Number</button>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const page1 = document.getElementById('page1');
+            const page2 = document.getElementById('page2');
+            const showMessageBtn = document.getElementById('showMessageBtn');
+            const backBtn = document.getElementById('backBtn');
+            const messageNumber = document.getElementById('messageNumber');
+            const messageContent = document.getElementById('messageContent');
+            const messageSource = document.getElementById('messageSource');
+
+            showMessageBtn.addEventListener('click', function() {
+                const number = parseInt(messageNumber.value);
+                
+                if (isNaN(number) || number < 1 || number > 77) {
+                    alert('Please enter a number between 1 and 77');
+                    return;
+                }
+                
+                showMessage(number);
+                page1.classList.remove('active');
+                page2.classList.add('active');
+            });
+
+            backBtn.addEventListener('click', function() {
+                page2.classList.remove('active');
+                page1.classList.add('active');
+                messageNumber.value = '';
+            });
+
+            function showMessage(number) {
+                let message = '';
+                let source = '';
+                
+                switch(number) {
+                    case 1:
+                        message = "Being thankful for the life that's given to me";
+                        source = "- Future by Jhope";
+                        break;
+                    case 2:
+                        message = "Though I'm standing under the frozen sunset,\nI will walk towards you, one step at a time";
+                        source = "- Still with you by Jungkook";
+                        break;
+                    case 3:
+                        message = "You were the light that led me to you";
+                        source = "- Never Let Go by Jungkook";
+                        break;
+                    case 4:
+                        message = "I live so I love";
+                        source = "- Trivia:Love by RM";
+                        break;
+                    case 5:
+                        message = "No season can last forever";
+                        source = "- Spring Day by BTS";
+                        break;
+                    case 6:
+                        message = "Don't stop and worry yourself. It's good for nothing.";
+                        source = "- So What by BTS";
+                        break;
+                    case 7:
+                        message = "We were only seven, but we have you all now.";
+                        source = "- We are Bulletproof: the Eternal";
+                        break;
+                    case 8:
+                        message = "You are the cause of my euphoria.";
+                        source = "- Euphoria by Jungkook";
+                        break;
+                    case 9:
+                        message = "I wish you happiness everyday";
+                        source = "- V on Weverse";
+                        break;
+                    case 10:
+                        message = "It's okay to stop. There's no need to run without even knowing the reason";
+                        source = "- Paradise by BTS";
+                        break;
+                    case 11:
+                        message = "All these lights are colored in by you.";
+                        source = "- My You by Jungkook";
+                        break;
+                    case 12:
+                        message = "You can't stop me loving Myself";
+                        source = "- Idol by BTS";
+                        break;
+                    case 13:
+                        message = "We're happy right now\nSo why don't we ride this feeling";
+                        source = "- I wonder by Jhope";
+                        break;
+                    case 14:
+                        message = "You make my world light up inside";
+                        source = "- My Universe by Coldplay and BTS";
+                        break;
+                    case 15:
+                        message = "I'll push you from the east of sufferings to the west of peace";
+                        source = "- RM on Weverse";
+                        break;
+                    case 16:
+                        message = "Keep on shining, make it brighter than a spotlight";
+                        source = "- Dream Glow";
+                        break;
+                    case 17:
+                        message = "Where there is hope, there is always hardship";
+                        source = "- Sea (hidden track) by BTS";
+                        break;
+                    case 18:
+                        message = "Live just like we're golden";
+                        source = "- Permission to Dance by BTS";
+                        break;
+                    case 19:
+                        message = "Even the scares from your mistakes can be your own constellation";
+                        source = "- Answer: Love Myself by BTS";
+                        break;
+                    case 20:
+                        message = "You've shown me I've reasons I should love myself";
+                        source = "- Answer: Love Myself by BTS";
+                        break;
+                    case 21:
+                        message = "You're my best friend For the rest of my life";
+                        source = "- For Youth by BTS";
+                        break;
+                    case 22:
+                        message = "You're the last reason for me who was standing on the edge of cliff";
+                        source = "- Magic Shop by BTS";
+                        break;
+                    case 23:
+                        message = "Life goes on Let's live on";
+                        source = "- BTS on Unicef 2020";
+                        break;
+                    case 24:
+                        message = "You'll be only one who can protect yourself";
+                        source = "- RM";
+                        break;
+                    case 25:
+                        message = "I just love you we love you, and we're BTS, you're army we're each other's everything";
+                        source = "- RM from PTD on stage";
+                        break;
+                    case 26:
+                        message = "we'll be running wild, lovin' 'til the sun is out,\nrunning 'til there's nothing left til our last breath";
+                        source = "- Running Wild by Jin";
+                        break;
+                    case 27:
+                        message = "You're the star that turns ordinaries into extraordinaries";
+                        source = "- Boy With Luv by BTS";
+                        break;
+                    case 28:
+                        message = "Future's gonna be okay";
+                        source = "- D-day by AGUSTD";
+                        break;
+                    case 29:
+                        message = "I'll the there. today, as always, I linger by your side";
+                        source = "- Abyss by Jin";
+                        break;
+                    case 30:
+                        message = "You're my silver Lining";
+                        source = "- Take Two by BTS";
+                        break;
+                    case 31:
+                        message = "When you feel down, when you feel all alone\nWhen you need someone to lean on, I'll be there for you";
+                        source = "- I'll be there by Jin";
+                        break;
+                    case 32:
+                        message = "You're my silver Lining";
+                        source = "- Take Two by BTS";
+                        break;
+                    case 33:
+                        message = "It's okay to shed tear but don't you tear yourself";
+                        source = "- Moonchild by RM";
+                        break;
+                    case 34:
+                        message = "Happiness is not something that you have to achieve";
+                        source = "- RM";
+                        break;
+                    case 35:
+                        message = "Follow your dream like breaker\neven if it breaks down don't even run backwards never";
+                        source = "- Tomorrow by BTS";
+                        break;
+                    case 36:
+                        message = "Dream, though you beginnings maybe humble may the end be prosperous";
+                        source = "- So far away by AGUSTD";
+                        break;
+                    case 37:
+                        message = "The world has never let us dream, nor has it ever taught us how to dream.\nAnd then they say it's your fault, but it's not.\nDon't blame yourself. When you're having a tough time, you can lean on us";
+                        source = "- Suga";
+                        break;
+                    case 38:
+                        message = "Please use me, please use BTS to love yourself";
+                        source = "- RM";
+                        break;
+                    case 39:
+                        message = "I'll circle around your side\nI'll stay by your side\nI'll become your light.\nAll for you";
+                        source = "- Moon by Jin";
+                        break;
+                    case 40:
+                        message = "You're one in million so let all your colors shine";
+                        source = "- The Planet by BTS";
+                        break;
+                    case 41:
+                        message = "Do what you like. Don't worry about what other people might think. What's important is what you want";
+                        source = "- Jin";
+                        break;
+                    case 42:
+                        message = "I'll tell you again We'll never ever give up, forever\nI'll say it again, We'll always be alive to move us";
+                        source = "- Neuron by Jhope";
+                        break;
+                    case 43:
+                        message = "Shine dream smile";
+                        source = "- Mikrokosmos by BTS";
+                        break;
+                    case 44:
+                        message = "We're together, so I'm not afraid of hoping for eternity\nYou are my trust and you're the only reason";
+                        source = "- Take Two by BTS";
+                        break;
+                    case 45:
+                        message = "I'm the one should love in this world";
+                        source = "- Epiphany by Jin";
+                        break;
+                    case 46:
+                        message = "Hate'll paralyze your mind\nGotta see the other side\nIt costs ya nothing to be kind";
+                        source = "- Equal sign by Jhope";
+                        break;
+                    case 47:
+                        message = "Let's make a door in your heart\nopen the door and this place will await\nThe magic shop will comfort you";
+                        source = "- Magic shop by BTS";
+                        break;
+                    case 48:
+                        message = "After all this time, there is only one thing I've learned\nI'll be forever me.\nLeft behind these memories mixed up so vividly now I'll be protecting myself.\nSo no looking back, no No looking back";
+                        source = "- No.2 by RM";
+                        break;
+                    case 49:
+                        message = "You got the best of me.\nSo please just don't leave me";
+                        source = "- Best of me by BTS";
+                        break;
+                    case 50:
+                        message = "Even when I fall and hurt myself I keep running toward my dream";
+                        source = "- Young Forever BTS";
+                        break;
+                    case 51:
+                        message = "Memories like gold, we'll never let go";
+                        source = "- Yet to come (Hyndai version)";
+                        break;
+                    case 52:
+                        message = "Run beautiful run yeah you gotta run";
+                        source = "- RUN BTS";
+                        break;
+                    case 53:
+                        message = "Us is plural of U";
+                        source = "- 134340 by BTS";
+                        break;
+                    case 54:
+                        message = "try to be generous to yourself from time to time";
+                        source = "- Jin";
+                        break;
+                    case 55:
+                        message = "No matter what others say, no matter what the world says,\nyou're the best to me just the way you are";
+                        source = "- 21st Century Girl by BTS";
+                        break;
+                    case 56:
+                        message = "the thing that brightens me is the star that's been embroidered with love called 'you'\nis you, who's in my galaxy, making another different world";
+                        source = "- My Universe by Coldplay and BTS";
+                        break;
+                    case 57:
+                        message = "We laugh together\nWe cry together\nI guess these simple feelings were everything to me";
+                        source = "- Still with you by Jungkook";
+                        break;
+                    case 58:
+                        message = "It's alright now count 1,2,3 and forget\nErase all sad memories\nHold my hands and smile";
+                        source = "- 2! 3! by BTS";
+                        break;
+                    case 59:
+                        message = "You and I best moment is yet to come";
+                        source = "- Yet to come by BTS";
+                        break;
+                    case 60:
+                        message = "When the clock's second-hand\nCrosses the minute-hand\nThe world hold its breath for just a moment\nZero o'Clock";
+                        source = "- 00:00 by BTS";
+                        break;
+                    case 61:
+                        message = "I get heaven to myself when i'm with you and i love you";
+                        source = "- The Astronaut by Jin";
+                        break;
+                    case 62:
+                        message = "I left a purple balloon in your dream look it up";
+                        source = "- V on Weverse";
+                        break;
+                    case 63:
+                        message = "Love is a maze damn but you is amaze yeah";
+                        source = "- Love Maze by BTS";
+                        break;
+                    case 64:
+                        message = "Keep on shining, make it brighter than a spotlight";
+                        source = "- Dream Glow by Jin, Jimin, Jungkook & Charlie xcx";
+                        break;
+                    case 65:
+                        message = "Maybe in another place , another time\nIf I can turn it around\nWill I be by your side then?\nI'm waiting for you , I'll be here in the background";
+                        source = "- background by Jin";
+                        break;
+                    case 66:
+                        message = "I promise, I will come to you.\nIf you need me, I will come to you.";
+                        source = "- I'll come to you by Jin";
+                        break;
+                    case 67:
+                        message = "Don't be upset that someone didn't comfort you. If you're out of mind, why don't you try to do more and do less? You're less concerned, less worried, less tired, and take a little break";
+                        source = "- V on Weverse";
+                        break;
+                    case 68:
+                        message = "I want you forever I want to be forever with you";
+                        source = "- Euphoria by Jungkook";
+                        break;
+                    case 69:
+                        message = "Even if I want to fly, I have no wings. Your hands become my wings";
+                        source = "- A supplementary story : You Never Walk Alone by BTS";
+                        break;
+                    case 70:
+                        message = "You just have to look at my galaxies Be showered with all those stars\nI'll give you my world";
+                        source = "- Inner Child by V";
+                        break;
+                    case 71:
+                        message = "Sometimes we may get tired or sick\nThat's okay, I am by your side";
+                        source = "- You never walk alone by BTS";
+                        break;
+                    case 72:
+                        message = "You gave me the best of me so I'll give you the best of you";
+                        source = "- Magic shop by BTS";
+                        break;
+                    case 73:
+                        message = "If we're together, even an endless maze is paradise";
+                        source = "- Love Maze by BTS";
+                        break;
+                    case 74:
+                        message = "Listen to your heartbeat,\nit calls you whenever it wants to\nbeacuse within this pitch black darkness, You are shining so brightly";
+                        source = "- Save Me by BTS";
+                        break;
+                    case 75:
+                        message = "You worth it you perfect deserve it, just work it";
+                        source = "- 21st century girls by BTS";
+                        break;
+                    case 76:
+                        message = "If we live fast let us die young";
+                        source = "- Run BTS by BTS";
+                        break;
+                    case 77:
+                        message = "Seven equals one, right, our heart still beats as one";
+                        source = "- Closer than this by Jimin";
+                        break;
+                    default:
+                        message = "Please enter a number between 1 and 77";
+                        source = "";
+                }
+                
+                // Replace newlines with <br> tags for HTML display
+                const formattedMessage = message.replace(/\n/g, '<br>');
+                messageContent.innerHTML = formattedMessage;
+                messageSource.textContent = source;
+            }
+        });
+    </script>
+</body>
+</html>
